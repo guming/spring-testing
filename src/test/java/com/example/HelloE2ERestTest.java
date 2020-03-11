@@ -41,9 +41,10 @@ public class HelloE2ERestTest {
 
     @Test
     public void shouldReturnGreeting() throws Exception {
+        //given
         Person peter = new Person("Peter", "Pan");
         personRepository.save(peter);
-
+        //when & then
         when()
                 .get(String.format("http://localhost:%s/person/Pan", port))
                 .then()

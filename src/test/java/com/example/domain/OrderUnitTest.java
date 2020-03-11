@@ -17,16 +17,13 @@ class OrderUnitTest {
     @Test
     void shouldCompleteOrder_thenChangeStatus() {
         final Order order = OrderProvider.getCreatedOrder();
-
         order.complete();
-
         assertEquals(OrderStatus.COMPLETED, order.getStatus());
     }
 
     @Test
     void shouldCompleteOrder_fail_thenThrowException() {
         final Order order = OrderProvider.getCompletedOrder();
-
         final Executable executable = () -> order.complete();
         Assertions.assertThrows(DomainException.class, executable);
     }
@@ -38,7 +35,8 @@ class OrderUnitTest {
           .getOrderItems()
           .size();
         final BigDecimal orderOriginalPrice = order.getPrice();
-        final Product productToAdd = new Product(UUID.randomUUID().toString(), new BigDecimal("20"), "secondProduct");
+        final Product productToAdd = new Product(UUID.randomUUID().toString(),
+                new BigDecimal("20"), "secondProduct");
 
         order.addOrder(productToAdd);
 
@@ -75,9 +73,7 @@ class OrderUnitTest {
           .getOrderItems()
           .get(0)
           .getProductId();
-        
         order.removeOrder(productId);
-
         assertEquals(0, order
           .getOrderItems()
           .size());
@@ -86,10 +82,6 @@ class OrderUnitTest {
     @Test
     void shouldRemoveProduct_fail_withInvalidPid_thenThrowException() {
         final Order order = OrderProvider.getCreatedOrder();
-        final String productId = order
-                .getOrderItems()
-                .get(0)
-                .getProductId();
         final String prductuId_wrong = "test";
         final Executable executable = () -> order.removeOrder(prductuId_wrong);
         Assertions.assertThrows(DomainException.class, executable);
